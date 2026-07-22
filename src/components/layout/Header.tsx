@@ -7,6 +7,7 @@ import ReportModal from "../ui/ReportModal";
 
 const navLinks = [
   { label: "Home", href: "/" },
+  { label: "Coverage", href: "/coverage" },
   { label: "Facilities", href: "/facilities" },
   { label: "Chat", href: "/chat" },
   { label: "Profile", href: "/profile" },
@@ -14,18 +15,35 @@ const navLinks = [
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      setScrolled(currentScrollY > 20);
+
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        // Scrolling down and past the header height
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
+    <header className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${!isVisible ? styles.hidden : ""}`}>
       <div className={`container ${styles.inner}`}>
         {/* Logo */}
         <Link href="/" className={styles.logo} id="header-logo">
@@ -36,7 +54,7 @@ export default function Header() {
               <circle cx="12" cy="12" r="3" fill="white" />
             </svg>
           </div>
-          <span className={styles.logoText}>CareBridge</span>
+          <span className={styles.logoText}>SpatialCare</span>
         </Link>
 
         {/* Desktop Nav */}

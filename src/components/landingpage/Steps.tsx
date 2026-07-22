@@ -5,7 +5,7 @@ export default function Steps() {
     <section className="py-16 bg-white border-y border-gray-100">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center max-w-xl mx-auto mb-12">
-          <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-50 px-3 py-1 rounded-full">How CareBridge Works</span>
+          <span className="text-xs font-bold text-purple-600 uppercase tracking-widest bg-purple-50 px-3 py-1 rounded-full">How SpatialCare Works</span>
           <h2 className="text-3xl font-black text-gray-900 mt-3">Healthcare help in 3 steps</h2>
           <p className="text-sm text-gray-500 mt-2">A simple, structured system designed to bring peace of mind when you need it most.</p>
         </div>

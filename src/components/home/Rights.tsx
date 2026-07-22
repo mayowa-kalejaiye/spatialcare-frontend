@@ -1,10 +1,10 @@
 import styles from "./Rights.module.css";
 
 const counters = [
-  { value: "6,742", label: "Successful referrals", color: "#FBBF24" }, // Yellow
-  { value: "5,120", label: "Free consultations", color: "#A855F7" }, // Purple
-  { value: "1,883", label: "Legal queries resolved", color: "#60A5FA" }, // Blue
-  { value: "4,210", label: "Patient advocates", color: "#F472B6" }, // Pink
+  { value: "6,742", label: "Malaria Treatment Centers", bgColor: "#B28CF7" }, 
+  { value: "5,120", label: "Vaccination Points", bgColor: "#FA86AA" }, 
+  { value: "1,893", label: "HIV Care Centers", bgColor: "#089063" }, 
+  { value: "4,210", label: "Maternal Care Facilities", bgColor: "#A7BD18" }, 
 ];
 
 const features = [
@@ -53,8 +53,8 @@ export default function Rights() {
         <div className={styles.right}>
           <div className={styles.countersGrid}>
             {counters.map((c, i) => (
-              <div key={c.label} className={styles.counterCard} id={`counter-${i}`}>
-                <div className={styles.counterValue} style={{ color: c.color }}>{c.value}</div>
+              <div key={c.label} className={styles.counterCard} id={`counter-${i}`} style={{ background: c.bgColor }}>
+                <div className={styles.counterValue} style={{ color: "#FFFFFF" }}>{c.value}</div>
                 <div className={styles.counterLabel}>{c.label}</div>
               </div>
             ))}

@@ -21,7 +21,7 @@ export default function Footer() {
                 <circle cx="12" cy="12" r="3" fill="#A855F7"/>
               </svg>
             </div>
-            <span className={styles.logoText}>CareBridge</span>
+            <span className={styles.logoText}>SpatialCare</span>
           </a>
           <p className={styles.brandDesc}>
             Connecting you to the best healthcare options around you. Discover free appointments, verified hospitals, and fast emergency routing, completely free.
@@ -52,7 +52,7 @@ export default function Footer() {
       <div className={styles.bottomBar}>
         <div className={`container ${styles.bottomInner}`}>
           <p className={styles.copyright}>
-            &copy; 2024 CareBridge, a product of Spatial Care Inc.
+            &copy; 2024 SpatialCare, a product of Spatial Care Inc.
           </p>
           <div className={styles.socials}>
             <a href="#" className={styles.social}>X</a>

@@ -27,6 +27,15 @@ const AVAILABLE_IMAGES = [
   "/images/hospitals/10.jpg",
 ];
 
+const DIVERSE_PROMPTS = [
+  { label: "Is antenatal care free here?", getPrompt: (f: string) => `Is antenatal care free at ${f}?` },
+  { label: "What services are covered?", getPrompt: (f: string) => `What services does BHCPF cover at ${f}?` },
+  { label: "Are immunizations free?", getPrompt: (f: string) => `Do they offer free child immunizations at ${f}?` },
+  { label: "Is emergency care covered?", getPrompt: (f: string) => `Is emergency care covered at ${f}?` },
+  { label: "Free malaria treatment?", getPrompt: (f: string) => `Can I get malaria treatment for free at ${f}?` },
+  { label: "Family planning available?", getPrompt: (f: string) => `Are family planning services available at ${f}?` }
+];
+
 function StarRating({ rating }: { rating: number }) {
   return (
     <div className={cardStyles.stars}>
@@ -113,7 +122,6 @@ export default function TopFacilities() {
                     <StarRating rating={4.5} />
                     <span className={cardStyles.ratingValue}>4.5</span>
                     <span className={cardStyles.reviewCount}>(Verified)</span>
-                    <span className={cardStyles.ratingText}>- Excellent</span>
                   </div>
 
                   <div className={cardStyles.specialties}>
@@ -121,6 +129,34 @@ export default function TopFacilities() {
                       Open Now
                     </span>
                     <span className={cardStyles.specialty}>General Practice</span>
+                  </div>
+
+                  <div className={cardStyles.askAIPills}>
+                    <div className={cardStyles.aiHeader}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 8V4H8"></path>
+                        <rect x="4" y="8" width="16" height="12" rx="2"></rect>
+                        <path d="M2 14h2"></path>
+                        <path d="M20 14h2"></path>
+                        <path d="M15 13v2"></path>
+                        <path d="M9 13v2"></path>
+                      </svg>
+                      <span>Ask AI</span>
+                    </div>
+                    <div className={cardStyles.pillContainer}>
+                      <Link 
+                        href={`/chat?state=${encodeURIComponent(h.state)}&lga=${encodeURIComponent(h.lga)}&ward=${encodeURIComponent(h.ward || '')}&prompt=${encodeURIComponent(DIVERSE_PROMPTS[i % DIVERSE_PROMPTS.length].getPrompt(h.facility_name))}`}
+                        className={cardStyles.aiPill}
+                      >
+                        {DIVERSE_PROMPTS[i % DIVERSE_PROMPTS.length].label}
+                      </Link>
+                      <Link 
+                        href={`/chat?state=${encodeURIComponent(h.state)}&lga=${encodeURIComponent(h.lga)}&ward=${encodeURIComponent(h.ward || '')}&prompt=${encodeURIComponent(DIVERSE_PROMPTS[(i + 3) % DIVERSE_PROMPTS.length].getPrompt(h.facility_name))}`}
+                        className={cardStyles.aiPill}
+                      >
+                        {DIVERSE_PROMPTS[(i + 3) % DIVERSE_PROMPTS.length].label}
+                      </Link>
+                    </div>
                   </div>
 
                   <div className={cardStyles.actions}>

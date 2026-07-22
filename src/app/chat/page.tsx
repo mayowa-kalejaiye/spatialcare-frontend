@@ -1,5 +1,6 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import styles from "./Chat.module.css";
 import { Send, Bot, MapPin, Globe, Loader2, Search, X, Check } from "lucide-react";
 
@@ -10,11 +11,11 @@ interface Message {
 }
 
 const GREETINGS = [
-  "Hello! I'm your CareBridge AI assistant. I can help you understand BHCPF coverage and healthcare policies. Where are you located?",
-  "Howfa! I be your CareBridge AI assistant. I fit help you understand BHCPF coverage and healthcare policies. Where you dey?",
-  "Sannu! Ni ne mataimakin ku na CareBridge AI. Zan iya taimaka muku fahimtar tsarin BHCPF da manufofin kiwon lafiya. A ina kuke?",
-  "Nnọọ! Abụ m onye enyemaka CareBridge AI gị. Enwere m ike inyere gị aka ịghọta mkpuchi BHCPF na iwu nlekọta ahụike. Ebee ka ịnọ?",
-  "Bawo! Emi ni oluranlowo CareBridge AI rẹ. Mo le ṣe iranlọwọ fun ọ lati ni oye nipa BHCPF ati awọn eto ilera. Nibo ni o wa?"
+  "Hello! I'm your SpatialCare AI assistant. I can help you understand BHCPF coverage and healthcare policies. Where are you located?",
+  "Howfa! I be your SpatialCare AI assistant. I fit help you understand BHCPF coverage and healthcare policies. Where you dey?",
+  "Sannu! Ni ne mataimakin ku na SpatialCare AI. Zan iya taimaka muku fahimtar tsarin BHCPF da manufofin kiwon lafiya. A ina kuke?",
+  "Nnọọ! Abụ m onye enyemaka SpatialCare AI gị. Enwere m ike inyere gị aka ịghọta mkpuchi BHCPF na iwu nlekọta ahụike. Ebee ka ịnọ?",
+  "Bawo! Emi ni oluranlowo SpatialCare AI rẹ. Mo le ṣe iranlọwọ fun ọ lati ni oye nipa BHCPF ati awọn eto ilera. Nibo ni o wa?"
 ];
 
 function SearchModal({ 
@@ -87,7 +88,13 @@ function SearchModal({
   );
 }
 
-export default function ChatPage() {
+function ChatContent() {
+  const searchParams = useSearchParams();
+  const paramState = searchParams.get("state") || "";
+  const paramLga = searchParams.get("lga") || "";
+  const paramWard = searchParams.get("ward") || "";
+  const paramPrompt = searchParams.get("prompt") || "";
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -95,14 +102,14 @@ export default function ChatPage() {
       content: GREETINGS[0]
     }
   ]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(paramPrompt);
   const [isLoading, setIsLoading] = useState(false);
   
   const [context, setContext] = useState({
     language: "Auto",
-    state: "",
-    lga: "",
-    ward: ""
+    state: paramState,
+    lga: paramLga,
+    ward: paramWard
   });
 
   const [statesList, setStatesList] = useState<string[]>([]);
@@ -112,9 +119,10 @@ export default function ChatPage() {
   const [activeModal, setActiveModal] = useState<"language" | "state" | "lga" | "ward" | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const contextBarRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   };
 
   useEffect(() => {
@@ -122,6 +130,17 @@ export default function ChatPage() {
       scrollToBottom();
     }
   }, [messages, isLoading]);
+
+  // Auto-scroll context bar on mobile when new options become available
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth <= 768 && contextBarRef.current && context.state) {
+      setTimeout(() => {
+        if (contextBarRef.current) {
+          contextBarRef.current.scrollTo({ left: contextBarRef.current.scrollWidth, behavior: 'smooth' });
+        }
+      }, 150);
+    }
+  }, [context.state, context.lga]);
 
   // Cycle greetings automatically when there is only the first message
   useEffect(() => {
@@ -208,9 +227,9 @@ export default function ChatPage() {
       let aiText = data;
       try {
          const parsed = JSON.parse(data);
-         aiText = parsed.response || parsed.message || data;
+         aiText = parsed.answer || parsed.response || parsed.message || data;
       } catch (e) {
-         if (aiText.startsWith('"') && aiText.endsWith('"')) {
+         if (typeof aiText === 'string' && aiText.startsWith('"') && aiText.endsWith('"')) {
             aiText = aiText.slice(1, -1);
          }
       }
@@ -228,24 +247,14 @@ export default function ChatPage() {
     }
   };
 
-  const languages = ["Auto Language", "English", "Hausa", "Yoruba", "Igbo"];
+  const languages = ["Auto Language", "English", "Pidgin", "Hausa", "Yoruba", "Igbo"];
 
   return (
     <main className={styles.mainWrapper}>
       <div className={styles.chatCard}>
-        {/* Header */}
-        <div className={styles.chatHeader}>
-          <div className={styles.botAvatar}>
-            <Bot size={24} />
-          </div>
-          <div className={styles.headerText}>
-            <h1>AI Coverage Assistant</h1>
-            <p>Get precise, localized answers about BHCPF policy rules.</p>
-          </div>
-        </div>
-
         {/* Messages */}
         <div className={styles.messagesArea}>
+          <div className={styles.centerContainer}>
           {messages.map((msg) => (
             <div key={msg.id} className={`${styles.messageWrapper} ${msg.role === 'user' ? styles.userWrapper : styles.aiWrapper}`}>
               {msg.role === 'ai' && (
@@ -269,11 +278,13 @@ export default function ChatPage() {
             </div>
           )}
           <div ref={messagesEndRef} />
+          </div>
         </div>
 
         {/* Input Area */}
         <div className={styles.inputArea}>
-          <div className={styles.contextBar}>
+          <div className={styles.centerContainer}>
+          <div className={styles.contextBar} ref={contextBarRef}>
             <button 
               className={styles.contextButton} 
               onClick={() => setActiveModal("language")}
@@ -337,6 +348,7 @@ export default function ChatPage() {
           <div className={styles.disclaimer}>
             AI can make mistakes. Please verify important information with official sources.
           </div>
+          </div>
         </div>
       </div>
 
@@ -377,5 +389,13 @@ export default function ChatPage() {
         onSelect={(val) => setContext({ ...context, ward: val })}
       />
     </main>
+  );
+}
+
+export default function ChatPage() {
+  return (
+    <Suspense fallback={<main className={styles.mainWrapper}><div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--gray-500)' }}>Loading chat...</div></main>}>
+      <ChatContent />
+    </Suspense>
   );
 }

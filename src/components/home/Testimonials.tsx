@@ -10,17 +10,17 @@ const testimonials = [
     avatarInitial: "TO"
   },
   {
-    quote: "“We checked prices for the test across hospitals in our area. The CareBridge platform showed us a closer hospital with the test at half the price! Completely free saving network!”",
-    name: "Kemi Coker",
-    time: "Patient",
+    quote: "“We checked prices for the test across hospitals in our area. The SpatialCare platform showed us a closer hospital with the test at half the price! Completely free saving network!”",
+    name: "Oluwakemi A.",
+    time: "Mother of two",
     color: "#E0F2FE",
     avatarBg: "#3B82F6",
     avatarInitial: "KC"
   },
   {
-    quote: "“I was billed for a free procedure. I checked on the platform and saw it was free! CareBridge patient advocate helped me get my money back from the hospital.”",
-    name: "Dr. Leke Adetula",
-    time: "Patient Advocate",
+    quote: "“I was billed for a free procedure. I checked on the platform and saw it was free! SpatialCare patient advocate helped me get my money back from the hospital.”",
+    name: "Ibrahim M.",
+    time: "Local Trader",
     color: "#FEF3C7",
     avatarBg: "#F59E0B",
     avatarInitial: "LA"

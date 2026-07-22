@@ -1,8 +1,8 @@
 import styles from "./Stats.module.css";
 
 const stats = [
-  { value: "12,400+", label: "Qualified Doctors" },
-  { value: "38", label: "Specialties" },
+  { value: "8.4k+", label: "Qualified Doctors" },
+  { value: "36", label: "States" },
   { value: "4.2M+", label: "Patients Served" },
   { value: "520+", label: "Partner Hospitals" },
 ];

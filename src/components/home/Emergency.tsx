@@ -1,14 +1,15 @@
 import styles from "./Emergency.module.css";
+import Link from "next/link";
 
 const emergencies = [
-  { icon: "🖤", title: "Heart Attack", desc: "Cardiac emergencies", color: "#FEE2E2" },
-  { icon: "🧠", title: "Stroke", desc: "Neurological emergencies", color: "#FCE7F3" },
-  { icon: "👶", title: "Infant", desc: "Pediatric emergencies", color: "#FEF3C7" },
-  { icon: "🚑", title: "Accident / Trauma", desc: "Severe injuries", color: "#FFE4E6" },
-  { icon: "🩸", title: "Severe Bleeding", desc: "Hemorrhage care", color: "#FEE2E2" },
-  { icon: "🐍", title: "Snakebite", desc: "Venomous bites", color: "#DCFCE7" },
-  { icon: "🔥", title: "Severe Burns", desc: "Thermal emergencies", color: "#E0F2FE" },
-  { icon: "☠️", title: "Poisoning", desc: "Toxicology cases", color: "#F3E8FF" },
+  { icon: "🖤", title: "Heart Attack", desc: "Nearest cardiac care unit" },
+  { icon: "🧠", title: "Stroke", desc: "Stroke-ready facilities" },
+  { icon: "🤱", title: "Labour", desc: "Available maternity beds" },
+  { icon: "🚑", title: "Accident / Trauma", desc: "Trauma & A&E units" },
+  { icon: "🩸", title: "Blood Transfusion", desc: "Blood banks nearby" },
+  { icon: "🐍", title: "Snakebite", desc: "Antivenom stock verified" },
+  { icon: "💨", title: "Breathing Difficulty", desc: "Respiratory emergency" },
+  { icon: "⚠️", title: "Poisoning", desc: "Toxicology centres" },
 ];
 
 export default function Emergency() {
@@ -18,13 +19,13 @@ export default function Emergency() {
         <div className="text-center">
           <h2 className="section-title">Emergency routing for every situation</h2>
           <p className="section-subtitle">
-            If you have an emergency, our intelligent routing system connects you to the nearest equipped hospital.
+            In a crisis, every second counts. SpatialCare routes you to the right facility instantly.
           </p>
         </div>
 
         <div className={styles.grid}>
           {emergencies.map((e, i) => (
-            <div key={e.title} className={styles.card} style={{ background: e.color }} id={`emergency-${i}`}>
+            <div key={e.title} className={styles.card} id={`emergency-${i}`}>
               <div className={styles.icon}>{e.icon}</div>
               <div>
                 <h3 className={styles.cardTitle}>{e.title}</h3>
@@ -35,9 +36,9 @@ export default function Emergency() {
         </div>
 
         <div className="text-center" style={{ marginTop: "48px" }}>
-          <button className="btn btn-secondary" style={{ padding: "12px 32px" }}>
+          <Link href="/facilities" className="btn btn-secondary" style={{ padding: "12px 32px" }}>
             Route me to a hospital
-          </button>
+          </Link>
         </div>
       </div>
     </section>

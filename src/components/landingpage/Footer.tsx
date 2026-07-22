@@ -10,7 +10,7 @@ export default function Footer() {
             <div className="w-8 h-8 rounded-lg bg-white text-purple-700 flex items-center justify-center font-bold">
               <Stethoscope className="w-5 h-5" />
             </div>
-            <span className="text-lg font-black tracking-tight">CareBridge</span>
+            <span className="text-lg font-black tracking-tight">SpatialCare</span>
           </div>
           <p className="text-xs text-purple-200 leading-relaxed">
             Simplifying healthcare accessibility, verified hospital booking, and patient advocacy worldwide.
@@ -49,7 +49,7 @@ export default function Footer() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 border-t border-purple-600 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-purple-200">
-        <p>© 2026 CareBridge Technologies Inc. All rights reserved.</p>
+        <p>© 2026 SpatialCare Technologies Inc. All rights reserved.</p>
         <div className="flex gap-4 mt-4 sm:mt-0">
           <a href="#" className="hover:underline">Privacy</a>
           <a href="#" className="hover:underline">Terms</a>

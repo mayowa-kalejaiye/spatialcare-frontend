@@ -1,16 +1,17 @@
 import styles from "./Categories.module.css";
+import Link from "next/link";
 
 const categories = [
-  { name: "Emergency Care", count: "48 hospitals", color: "#F3F4F6", icon: "🚑" },
-  { name: "Primary Care", count: "124 doctors", color: "#E0F2FE", icon: "🩺" },
-  { name: "HIV/AIDS", count: "36 specialists", color: "#FEE2E2", icon: "🎗️" },
-  { name: "Infectious diseases", count: "215 doctors", color: "#DCFCE7", icon: "🦠" },
-  { name: "Pharmacy", count: "380 stores", color: "#F3E8FF", icon: "💊" },
-  { name: "Blood Bank", count: "89 clinics", color: "#FFE4E6", icon: "🩸" },
-  { name: "Hospital/Clinic", count: "77 centers", color: "#E0E7FF", icon: "🏥" },
-  { name: "Cardiology", count: "67 surgeons", color: "#FCE7F3", icon: "🫀" },
-  { name: "Optician Care", count: "58 clinics", color: "#E0F2FE", icon: "👁️" },
-  { name: "Dentistry", count: "93 doctors", color: "#FCE7F3", icon: "🦷" },
+  { name: "Emergency Care", count: "2,841 facilities", color: "#FFFFFF", image: "/images/categories/emergency.svg" },
+  { name: "Maternal Care", count: "2,841 facilities", color: "#E2E8F0", image: "/images/categories/maternal.svg" },
+  { name: "HIV/AIDS", count: "2,841 facilities", color: "#FECDD3", image: "/images/categories/hiv.svg" },
+  { name: "Malaria treatment", count: "2,841 facilities", color: "#D1E3D3", image: "/images/categories/malaria.svg" },
+  { name: "Vaccination", count: "2,841 facilities", color: "#E0F2FE", image: "/images/categories/vaccination.svg" },
+  { name: "Blood bank", count: "2,841 facilities", color: "#F5D0D0", image: "/images/categories/blood_bank.svg" },
+  { name: "Diagnostic and lab", count: "2,841 facilities", color: "#E9E1F9", image: "/images/categories/diagnostic.svg" },
+  { name: "Mental health", count: "2,841 facilities", color: "#F5DADA", image: "/images/categories/mental_health.svg" },
+  { name: "Child health care", count: "2,841 facilities", color: "#D3E0DF", image: "/images/categories/child_health.svg" },
+  { name: "Tuberculosis", count: "2,841 facilities", color: "#FCE7F3", image: "/images/categories/tuberculosis.svg" },
 ];
 
 export default function Categories() {
@@ -18,27 +19,29 @@ export default function Categories() {
     <section className="section" id="categories" style={{ background: "var(--gray-50)" }}>
       <div className="container">
         <div className="text-center">
-          <span className="section-label" style={{ color: "var(--green)" }}>Browse by Category</span>
-          <h2 className="section-title">Browse by healthcare category</h2>
+          <span className="section-label" style={{ color: "var(--green)" }}>BHCPF COVERAGE</span>
+          <h2 className="section-title">100% Free Health Coverage</h2>
           <p className="section-subtitle">
-            Find specialists and facilities across every medical discipline — all verified and near you.
+            Explore the key healthcare services and treatments fully covered by the Basic Health Care Provision Fund.
           </p>
         </div>
 
         <div className={styles.grid}>
           {categories.map((cat, i) => (
-            <button key={cat.name} className={styles.card} style={{ background: cat.color }} id={`category-${i}`}>
+            <Link key={cat.name} href="/coverage" className={styles.card} style={{ background: cat.color }} id={`category-${i}`}>
               <div className={styles.info}>
                 <div className={styles.name}>{cat.name}</div>
                 <div className={styles.count}>{cat.count}</div>
               </div>
-              <div className={styles.icon}>{cat.icon}</div>
-            </button>
+              <div className={styles.imageWrapper}>
+                <img src={cat.image} alt={cat.name} className={styles.categoryImage} />
+              </div>
+            </Link>
           ))}
         </div>
 
         <div className="text-center" style={{ marginTop: "40px" }}>
-          <a href="#" className="btn btn-outline-primary">View All 38 Categories</a>
+          <Link href="/coverage" className="btn btn-outline-primary">View Full Coverage Details</Link>
         </div>
       </div>
     </section>

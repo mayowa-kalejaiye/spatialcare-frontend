@@ -15,6 +15,10 @@
   box-shadow: var(--shadow-sm);
 }
 
+.header.hidden {
+  transform: translateY(-100%);
+}
+
 .inner {
   display: flex;
   align-items: center;

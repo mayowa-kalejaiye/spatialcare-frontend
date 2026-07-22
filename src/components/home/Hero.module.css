@@ -40,7 +40,7 @@
   font-size: 18px;
   color: var(--gray-600);
   max-width: 800px;
-  margin: 0 auto 40px;
+  margin: 0 auto 80px;
 }
 
 .searchBar {
@@ -143,8 +143,8 @@
 }
 
 .floatRightTop {
-  top: 5%;
-  right: -80px;
+  top: 0%;
+  right: 20px;
 }
 
 .heroIconImg {

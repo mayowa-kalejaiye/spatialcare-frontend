@@ -6,7 +6,7 @@ const steps = [
     badge: "/images/steps/badge1.png",
     badgeColor: "#3B82F6",
     title: "Search Your Location",
-    description: "Enter your address, LGA, or state. Or allow GPS for instant nearby results. CareBridge finds all accredited facilities within your area.",
+    description: "Enter your address, LGA, or state. Or allow GPS for instant nearby results. SpatialCare finds all accredited facilities within your area.",
   },
   {
     image: "/images/steps/step2.jpg",
@@ -44,7 +44,7 @@ export default function HowItWorks() {
               marginBottom: "16px"
             }}
           >
-            How CareBridge Works
+            How SpatialCare Works
           </span>
           <h2 className="section-title">Healthcare help in 3 steps</h2>
           <p className="section-subtitle">
