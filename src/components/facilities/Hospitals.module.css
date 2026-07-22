@@ -3,6 +3,93 @@
   align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 40px;
+  gap: 24px;
+}
+
+.titleArea {
+  flex: 1;
+}
+
+.subHeading {
+  font-size: 16px;
+  color: var(--gray-500);
+  margin-top: 12px;
+}
+
+.controlsArea {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-full);
+  padding: 10px 16px;
+  width: 260px;
+  box-shadow: var(--shadow-sm);
+}
+
+.searchBar svg {
+  color: var(--gray-400);
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: var(--gray-800);
+  font-family: inherit;
+  width: 100%;
+}
+
+.searchInput::placeholder {
+  color: var(--gray-400);
+}
+
+.filtersWrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.filterSelect {
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  font-size: 13px;
+  color: var(--gray-700);
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.filterSelect:disabled {
+  background-color: var(--gray-50);
+  color: var(--gray-400);
+  cursor: not-allowed;
+}
+
+.loadingState {
+  text-align: center;
+  padding: 60px 0;
+  font-size: 16px;
+  color: var(--gray-500);
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--gray-300);
 }
 
 .dropdownBtn {
@@ -193,6 +280,33 @@
 }
 
 @media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .controlsArea {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .searchBar {
+    width: 100%;
+  }
+  .filtersWrapper {
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .filterSelect {
+    width: 100%;
+    max-width: none;
+  }
+  .dropdownBtn {
+    justify-content: center;
+    border: 1px solid var(--gray-200);
+    padding: 10px;
+    border-radius: var(--radius-md);
+  }
   .grid {
     grid-template-columns: 1fr;
   }

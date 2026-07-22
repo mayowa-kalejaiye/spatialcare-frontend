@@ -1,42 +1,28 @@
+"use client";
+import { useState, useEffect } from "react";
 import styles from "./Hospitals.module.css";
 
-const hospitals = [
-  {
-    name: "Lagos University Teaching Hospital",
-    location: "Idi-Araba, Lagos",
-    rating: 4.8,
-    reviews: 1204,
-    distance: "1.2 miles away",
-    open: true,
-    specialties: ["General Practice", "Cardiology", "Neurology"],
-    imageBg: "#D1D5DB", // placeholder color
-    badge: "Featured",
-    premium: true,
-  },
-  {
-    name: "National Hospital Abuja",
-    location: "Central Business District, Abuja",
-    rating: 4.6,
-    reviews: 892,
-    distance: "2.4 miles away",
-    open: true,
-    specialties: ["General Practice", "Oncology", "Maternity"],
-    imageBg: "#E5E7EB",
-    badge: "Verified",
-    premium: false,
-  },
-  {
-    name: "St. Nicholas Hospital",
-    location: "Lagos Island, Lagos",
-    rating: 4.9,
-    reviews: 2341,
-    distance: "0.8 miles away",
-    open: false,
-    specialties: ["Dermatology", "Eye Care", "Psychiatry"],
-    imageBg: "#F3F4F6",
-    badge: "Featured",
-    premium: true,
-  },
+interface Facility {
+  id: number;
+  facility_name: string;
+  lga: string;
+  ward: string;
+  state: string;
+  google_maps_url: string;
+  displayImage?: string;
+}
+
+const AVAILABLE_IMAGES = [
+  "/images/hospitals/1.jpg",
+  "/images/hospitals/2.jpg",
+  "/images/hospitals/3.jpg",
+  "/images/hospitals/4.jpeg",
+  "/images/hospitals/5.jpeg",
+  "/images/hospitals/6.jpeg",
+  "/images/hospitals/7.jpeg",
+  "/images/hospitals/8.jpg",
+  "/images/hospitals/9.jpg",
+  "/images/hospitals/10.jpg",
 ];
 
 function StarRating({ rating }: { rating: number }) {
@@ -56,70 +42,214 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export default function Hospitals() {
+  const [facilities, setFacilities] = useState<Facility[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const [states, setStates] = useState<string[]>([]);
+  const [lgas, setLgas] = useState<string[]>([]);
+  const [wards, setWards] = useState<string[]>([]);
+
+  const [selectedState, setSelectedState] = useState("fct"); // default to FCT
+  const [selectedLga, setSelectedLga] = useState("");
+  const [selectedWard, setSelectedWard] = useState("");
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Fetch states
+  useEffect(() => {
+    fetch("/api/locations/states")
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) setStates(data);
+      })
+      .catch(err => console.error("Error fetching states:", err));
+  }, []);
+
+  // Fetch LGAs
+  useEffect(() => {
+    if (selectedState) {
+      fetch(`/api/locations/lgas?state=${selectedState}`)
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) setLgas(data);
+        })
+        .catch(err => console.error("Error fetching LGAs:", err));
+
+      // Reset dependent filters
+      setSelectedLga("");
+      setSelectedWard("");
+      setWards([]);
+    }
+  }, [selectedState]);
+
+  // Fetch Wards
+  useEffect(() => {
+    if (selectedState && selectedLga) {
+      fetch(`/api/locations/wards?state=${selectedState}&lga=${selectedLga}`)
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) setWards(data);
+        })
+        .catch(err => console.error("Error fetching Wards:", err));
+
+      setSelectedWard("");
+    }
+  }, [selectedState, selectedLga]);
+
+  // Fetch Facilities
+  useEffect(() => {
+    setLoading(true);
+    let url = `/api/facilities/?state=${selectedState}&limit=10&offset=0`;
+    if (selectedLga) url += `&lga=${selectedLga}`;
+    if (selectedWard) url += `&ward=${selectedWard}`;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.facilities) {
+          const shuffledImages = [...AVAILABLE_IMAGES].sort(() => 0.5 - Math.random());
+          const withImages = data.facilities.map((f: Facility, i: number) => ({
+            ...f,
+            displayImage: shuffledImages[i % shuffledImages.length]
+          }));
+          setFacilities(withImages);
+        } else {
+          setFacilities([]);
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching facilities:", err);
+        setLoading(false);
+      });
+  }, [selectedState, selectedLga, selectedWard]);
+
+  const filteredFacilities = facilities.filter(f =>
+    f.facility_name?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <section className="section" id="hospitals">
       <div className="container">
         <div className={styles.header}>
-          <div>
-            <span className="section-label" style={{ color: "#3B82F6", textAlign: "left" }}>Verified Facilities</span>
-            <h2 className="section-title" style={{ textAlign: "left" }}>Verified hospitals near you</h2>
+          <div className={styles.titleArea}>
+            <h2 className="section-title" style={{ textAlign: "left" }}>Nearest Facilities</h2>
+            <p className={styles.subHeading}>Explore the nearest verified hospitals near you.</p>
           </div>
-          <button className={styles.dropdownBtn}>
-            Sort By
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
+
+          <div className={styles.controlsArea}>
+            <div className={styles.searchBar}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input
+                type="text"
+                placeholder="Search facilities..."
+                className={styles.searchInput}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+
+            <div className={styles.filtersWrapper}>
+              <select
+                className={styles.filterSelect}
+                value={selectedState}
+                onChange={e => setSelectedState(e.target.value)}
+              >
+                <option value="" disabled>Select State</option>
+                <option value="fct">FCT</option>
+                {states.map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
+
+              <select
+                className={styles.filterSelect}
+                value={selectedLga}
+                onChange={e => setSelectedLga(e.target.value)}
+                disabled={!selectedState || lgas.length === 0}
+              >
+                <option value="">All LGAs</option>
+                {lgas.map(l => <option key={l} value={l}>{l}</option>)}
+              </select>
+
+              <select
+                className={styles.filterSelect}
+                value={selectedWard}
+                onChange={e => setSelectedWard(e.target.value)}
+                disabled={!selectedLga || wards.length === 0}
+              >
+                <option value="">All Wards</option>
+                {wards.map(w => <option key={w} value={w}>{w}</option>)}
+              </select>
+            </div>
+          </div>
         </div>
 
-        <div className={styles.grid}>
-          {hospitals.map((h, i) => (
-            <article key={h.name} className={styles.card} id={`hospital-${i}`}>
-              <div className={styles.cardImage} style={{ background: h.imageBg }}>
-                <div className={styles.imageOverlay}>
-                  <span className={styles.badgeLeft}>{h.badge}</span>
-                  <button className={styles.heartBtn}>♡</button>
-                </div>
-              </div>
-
-              <div className={styles.cardBody}>
-                <div className={styles.cardHeader}>
-                  <h3 className={styles.cardName}>{h.name}</h3>
-                  {h.premium && <span className={styles.premiumBadge}>Premium Service</span>}
-                </div>
-
-                <div className={styles.cardLocation}>
-                  {h.distance} · {h.location}
-                </div>
-
-                <div className={styles.cardRating}>
-                  <StarRating rating={h.rating} />
-                  <span className={styles.ratingValue}>{h.rating}</span>
-                  <span className={styles.reviewCount}>({h.reviews.toLocaleString()} reviews)</span>
-                  <span className={styles.ratingText}>- Excellent</span>
+        {loading ? (
+          <div className={styles.loadingState}>Loading facilities...</div>
+        ) : filteredFacilities.length === 0 ? (
+          <div className={styles.loadingState}>No facilities found. Try adjusting your filters.</div>
+        ) : (
+          <div className={styles.grid}>
+            {filteredFacilities.map((h, i) => (
+              <article key={h.id} className={styles.card} id={`hospital-${i}`}>
+                <div 
+                  className={styles.cardImage} 
+                  style={{ 
+                    backgroundImage: `url(${h.displayImage})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
+                >
+                  <div className={styles.imageOverlay}>
+                    <span className={styles.badgeLeft}>Verified</span>
+                    <button className={styles.heartBtn}>♡</button>
+                  </div>
                 </div>
 
-                <div className={styles.specialties}>
-                  <span className={`${styles.specialty} ${h.open ? styles.specialtyGreen : styles.specialtyRed}`}>
-                    {h.open ? "Open Now" : "Closed"}
-                  </span>
-                  {h.specialties.map((s) => (
-                    <span key={s} className={styles.specialty}>{s}</span>
-                  ))}
-                </div>
+                <div className={styles.cardBody}>
+                  <div className={styles.cardHeader}>
+                    <h3 className={styles.cardName}>{h.facility_name}</h3>
+                  </div>
 
-                <div className={styles.actions}>
-                  <a href="#" className={`btn btn-primary ${styles.bookBtn}`} style={{ background: "var(--primary-100)", color: "var(--primary-dark)" }}>
-                    See Details
-                  </a>
-                  <button className={styles.phoneBtn}>
-                    📞
-                  </button>
+                  <div className={styles.cardLocation}>
+                    {h.ward && `${h.ward}, `}{h.lga}, {h.state}
+                  </div>
+
+                  <div className={styles.cardRating}>
+                    <StarRating rating={4.5} />
+                    <span className={styles.ratingValue}>4.5</span>
+                    <span className={styles.reviewCount}>(Verified)</span>
+                    <span className={styles.ratingText}>- Excellent</span>
+                  </div>
+
+                  <div className={styles.specialties}>
+                    <span className={`${styles.specialty} ${styles.specialtyGreen}`}>
+                      Open Now
+                    </span>
+                    <span className={styles.specialty}>General Practice</span>
+                  </div>
+
+                  <div className={styles.actions}>
+                    <a href="#" className={`btn btn-primary ${styles.bookBtn}`} style={{ background: "var(--primary-100)", color: "var(--primary-dark)" }}>
+                      See Details
+                    </a>
+                    {h.google_maps_url ? (
+                      <a href={h.google_maps_url} target="_blank" rel="noopener noreferrer" className={styles.phoneBtn} title="View on Google Maps">
+                        📍
+                      </a>
+                    ) : (
+                      <button className={styles.phoneBtn}>
+                        📞
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
-        </div>
+              </article>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
