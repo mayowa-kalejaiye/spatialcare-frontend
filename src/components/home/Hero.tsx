@@ -1,7 +1,64 @@
 "use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
+  const router = useRouter();
+
+  const [statesList, setStatesList] = useState<string[]>([]);
+  const [lgasList, setLgasList] = useState<string[]>([]);
+  const [wardsList, setWardsList] = useState<string[]>([]);
+
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedLga, setSelectedLga] = useState("");
+  const [selectedWard, setSelectedWard] = useState("");
+
+  useEffect(() => {
+    fetch("/api/locations/states")
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) setStatesList(data);
+      })
+      .catch(err => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    if (selectedState) {
+      fetch(`/api/locations/lgas?state=${selectedState}`)
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) setLgasList(data);
+        })
+        .catch(err => console.error(err));
+      
+      setSelectedLga("");
+      setSelectedWard("");
+      setWardsList([]);
+    }
+  }, [selectedState]);
+
+  useEffect(() => {
+    if (selectedState && selectedLga) {
+      fetch(`/api/locations/wards?state=${selectedState}&lga=${selectedLga}`)
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) setWardsList(data);
+        })
+        .catch(err => console.error(err));
+        
+      setSelectedWard("");
+    }
+  }, [selectedState, selectedLga]);
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (selectedState) params.append("state", selectedState);
+    if (selectedLga) params.append("lga", selectedLga);
+    if (selectedWard) params.append("ward", selectedWard);
+    
+    router.push(`/facilities?${params.toString()}`);
+  };
   return (
     <section className={styles.hero} id="hero">
       <div className={`container ${styles.inner}`}>
@@ -34,28 +91,22 @@ export default function Hero() {
         {/* Search Bar */}
         <div className={styles.searchBar}>
           <div className={styles.dropdownGroup}>
-            <select className={styles.searchDropdown} defaultValue="">
+            <select className={styles.searchDropdown} value={selectedState} onChange={e => setSelectedState(e.target.value)}>
               <option value="" disabled>Select State</option>
-              <option value="lagos">Lagos</option>
-              <option value="abuja">Abuja (FCT)</option>
-              <option value="kano">Kano</option>
+              {statesList.map(s => <option key={s} value={s}>{s}</option>)}
             </select>
             <span className={styles.divider}></span>
-            <select className={styles.searchDropdown} defaultValue="">
-              <option value="" disabled>Local Government</option>
-              <option value="ikeja">Ikeja</option>
-              <option value="eti-osa">Eti-Osa</option>
-              <option value="kano-municipal">Kano Municipal</option>
+            <select className={styles.searchDropdown} value={selectedLga} onChange={e => setSelectedLga(e.target.value)} disabled={!selectedState || lgasList.length === 0}>
+              <option value="">All Local Governments</option>
+              {lgasList.map(l => <option key={l} value={l}>{l}</option>)}
             </select>
             <span className={styles.divider}></span>
-            <select className={styles.searchDropdown} defaultValue="">
-              <option value="" disabled>Select Ward</option>
-              <option value="ward1">Ward 1</option>
-              <option value="ward2">Ward 2</option>
-              <option value="ward3">Ward 3</option>
+            <select className={styles.searchDropdown} value={selectedWard} onChange={e => setSelectedWard(e.target.value)} disabled={!selectedLga || wardsList.length === 0}>
+              <option value="">All Wards</option>
+              {wardsList.map(w => <option key={w} value={w}>{w}</option>)}
             </select>
           </div>
-          <button className="btn btn-primary" style={{ padding: "12px 32px" }}>Search</button>
+          <button className="btn btn-primary" style={{ padding: "12px 32px" }} onClick={handleSearch}>Search</button>
         </div>
 
         {/* Avatars */}

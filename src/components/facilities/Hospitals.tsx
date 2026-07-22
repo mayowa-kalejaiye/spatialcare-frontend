@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import styles from "./Hospitals.module.css";
 
 interface Facility {
@@ -42,6 +43,8 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export default function Hospitals() {
+  const searchParams = useSearchParams();
+
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -49,9 +52,10 @@ export default function Hospitals() {
   const [lgas, setLgas] = useState<string[]>([]);
   const [wards, setWards] = useState<string[]>([]);
 
-  const [selectedState, setSelectedState] = useState("fct"); // default to FCT
-  const [selectedLga, setSelectedLga] = useState("");
-  const [selectedWard, setSelectedWard] = useState("");
+  // Initialize with URL params if available, otherwise default fct for state
+  const [selectedState, setSelectedState] = useState(searchParams.get("state") || "fct"); 
+  const [selectedLga, setSelectedLga] = useState(searchParams.get("lga") || "");
+  const [selectedWard, setSelectedWard] = useState(searchParams.get("ward") || "");
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -232,16 +236,16 @@ export default function Hospitals() {
                   </div>
 
                   <div className={styles.actions}>
-                    <a href="#" className={`btn btn-primary ${styles.bookBtn}`} style={{ background: "var(--primary-100)", color: "var(--primary-dark)" }}>
-                      See Details
-                    </a>
                     {h.google_maps_url ? (
-                      <a href={h.google_maps_url} target="_blank" rel="noopener noreferrer" className={styles.phoneBtn} title="View on Google Maps">
-                        📍
+                      <a href={h.google_maps_url} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: "4px" }}>
+                          <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                        </svg>
+                        Get Directions
                       </a>
                     ) : (
-                      <button className={styles.phoneBtn}>
-                        📞
+                      <button className="btn" style={{ width: "100%", background: "var(--gray-200)", color: "var(--gray-500)", cursor: "not-allowed", display: "flex", justifyContent: "center" }} disabled>
+                        Directions Unavailable
                       </button>
                     )}
                   </div>
