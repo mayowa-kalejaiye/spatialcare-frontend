@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ReportModal from "./ReportModal";
+import ReportModal from "../ui/ReportModal";
 
 const navLinks = [
   { label: "Home", href: "/" },

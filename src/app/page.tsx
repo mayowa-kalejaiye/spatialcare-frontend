@@ -1,13 +1,10 @@
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Stats from "@/components/Stats";
-import HowItWorks from "@/components/HowItWorks";
-import Categories from "@/components/Categories";
-import Hospitals from "@/components/Hospitals";
-import Rights from "@/components/Rights";
-import Emergency from "@/components/Emergency";
-import Testimonials from "@/components/Testimonials";
-import Footer from "@/components/Footer";
+import Hero from "@/components/home/Hero";
+import Stats from "@/components/home/Stats";
+import HowItWorks from "@/components/home/HowItWorks";
+import Categories from "@/components/home/Categories";
+import Rights from "@/components/home/Rights";
+import Emergency from "@/components/home/Emergency";
+import Testimonials from "@/components/home/Testimonials";
 
 export default function Home() {
   return (
@@ -16,7 +13,6 @@ export default function Home() {
       <Stats />
       <HowItWorks />
       <Categories />
-      <Hospitals />
       <Rights />
       <Emergency />
       <Testimonials />

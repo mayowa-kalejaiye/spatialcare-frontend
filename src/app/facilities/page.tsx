@@ -1,4 +1,4 @@
-import Hospitals from "@/components/Hospitals";
+import Hospitals from "@/components/facilities/Hospitals";
 
 export default function FacilitiesPage() {
   return (
