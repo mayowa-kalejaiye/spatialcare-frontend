@@ -14,7 +14,8 @@
 
 .headline {
   font-size: clamp(40px, 6vw, 64px);
-  font-weight: 800;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
   color: var(--gray-900);
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -156,29 +157,35 @@
   .hero {
     padding: 120px 0 80px;
   }
+
   .searchBar {
     flex-direction: column;
     border-radius: var(--radius-lg);
     padding: 16px;
   }
+
   .dropdownGroup {
     flex-direction: column;
     width: 100%;
     margin-bottom: 16px;
   }
+
   .searchDropdown {
     width: 100%;
     padding: 12px;
     border: 1px solid var(--gray-200);
     border-radius: var(--radius-md);
   }
+
   .divider {
     display: none;
   }
+
   .searchBar .btn {
     width: 100%;
     justify-content: center;
   }
+
   .floatLeft,
   .floatRight {
     display: none;
