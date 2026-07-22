@@ -15,6 +15,10 @@ export const metadata: Metadata = {
   },
 };
 
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import BottomNav from "@/components/BottomNav";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,7 +30,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+        <BottomNav />
+      </body>
     </html>
   );
 }
