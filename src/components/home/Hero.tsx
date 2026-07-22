@@ -62,18 +62,19 @@ export default function Hero() {
   return (
     <section className={styles.hero} id="hero">
       <div className={`container ${styles.inner}`}>
-        {/* Left Floating Icon */}
-        <div className={styles.floatLeft} aria-hidden="true">
-          <div className={styles.iconCircle} style={{ background: "var(--primary-100)" }}>
-            <span style={{ fontSize: "40px" }}>🩺</span>
-          </div>
+        {/* Shield Icon (Middle Left) */}
+        <div className={styles.floatLeftMiddle} aria-hidden="true">
+          <img src="/images/hero/hero-icon2.svg" alt="Protection Shield" className={styles.heroIconImg} style={{ animationDelay: '0s' }} />
         </div>
 
-        {/* Right Floating Icon */}
-        <div className={styles.floatRight} aria-hidden="true">
-          <div className={styles.iconCircle} style={{ background: "var(--secondary-light)" }}>
-            <span style={{ fontSize: "40px" }}>✚</span>
-          </div>
+        {/* Stethoscope Icon (Bottom Left) */}
+        <div className={styles.floatLeftBottom} aria-hidden="true">
+          <img src="/images/hero/hero-icon3.svg" alt="Stethoscope" className={styles.heroIconImg} style={{ animationDelay: '1.5s', width: '120px' }} />
+        </div>
+
+        {/* Pink Cross Icon (Top Right) */}
+        <div className={styles.floatRightTop} aria-hidden="true">
+          <img src="/images/hero/hero-icon1.svg" alt="Medical Heart Cross" className={styles.heroIconImg} style={{ animationDelay: '0.7s', width: '110px' }} />
         </div>
 
         {/* Headline */}
@@ -85,7 +86,7 @@ export default function Hero() {
 
         {/* Subtext */}
         <p className={styles.subtext}>
-          Discover verified doctors, clinics, and hospitals near you. Compare options and book appointments in minutes.
+          Locate accredited hospitals, discover free government services, verify treatment availability, <br className="hidden md:block" />and get emergency routing, instantly, from anywhere in Nigeria.
         </p>
 
         {/* Search Bar */}
@@ -112,13 +113,27 @@ export default function Hero() {
         {/* Avatars */}
         <div className={styles.trusted}>
           <div className={styles.avatars}>
-            <div className={styles.avatar} style={{ background: "#FCA5A5" }}>👩🏽</div>
-            <div className={styles.avatar} style={{ background: "#93C5FD", zIndex: 2 }}>👨🏿</div>
-            <div className={styles.avatar} style={{ background: "#FCD34D", zIndex: 3 }}>👩🏾</div>
-            <div className={styles.avatar} style={{ background: "#86EFAC", zIndex: 4 }}>👨🏽</div>
-            <div className={styles.avatar} style={{ background: "#D8B4FE", zIndex: 5 }}>👩🏿</div>
+            {[
+              { src: "/images/avatars/avatar1.png", color: "#FF8EAA" },
+              { src: "/images/avatars/avatar2.png", color: "#6EE7B7" },
+              { src: "/images/avatars/avatar3.png", color: "#3B82F6" },
+              { src: "/images/avatars/avatar4.png", color: "#E5F90B" },
+              { src: "/images/avatars/avatar5.png", color: "#B49082" },
+            ].map((av, idx) => (
+              <img 
+                key={idx} 
+                src={av.src} 
+                alt={`User ${idx + 1}`} 
+                className={styles.avatarImg} 
+                style={{ 
+                  backgroundColor: av.color, 
+                  boxShadow: `0 0 0 2px white, 0 0 0 4px ${av.color}`, 
+                  zIndex: idx + 1 
+                }} 
+              />
+            ))}
           </div>
-          <span className={styles.trustedText}>Trusted by over 4M+ users</span>
+          <span className={styles.trustedText}>To served over2.5 billions african</span>
         </div>
       </div>
     </section>

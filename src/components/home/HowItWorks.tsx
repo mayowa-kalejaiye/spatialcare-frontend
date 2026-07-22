@@ -2,22 +2,25 @@ import styles from "./HowItWorks.module.css";
 
 const steps = [
   {
-    imageBg: "#FEE2E2",
-    icon: "🗺️",
-    title: "Select Your Location",
-    description: "Tell us your location. We'll instantly show you the best doctors, clinics, and hospitals in your area.",
+    image: "/images/steps/step1.jpg",
+    badge: "/images/steps/badge1.png",
+    badgeColor: "#3B82F6",
+    title: "Search Your Location",
+    description: "Enter your address, LGA, or state. Or allow GPS for instant nearby results. CareBridge finds all accredited facilities within your area.",
   },
   {
-    imageBg: "#DBEAFE",
-    icon: "❤️",
-    title: "Find a Doctor",
-    description: "Browse verified profiles, read reviews, and compare consultation fees to find the perfect doctor.",
+    image: "/images/steps/step2.jpg",
+    badge: "/images/steps/badge2.png",
+    badgeColor: "#A855F7",
+    title: "Verify & Compare",
+    description: "See government-verified facilities, available free services, real-time bed counts, ratings, and opening hours all in one place.",
   },
   {
-    imageBg: "#FEF3C7",
-    icon: "📍",
-    title: "Manage & Receive Care",
-    description: "Book appointments instantly online, manage your health records securely, and get care when you need it.",
+    image: "/images/steps/step3.jpg",
+    badge: "/images/steps/badge3.jpg",
+    badgeColor: "#F472B6",
+    title: "Navigate & Receive Care",
+    description: "Get instant directions, call the facility directly, or use emergency routing to reach the right care at the right time.",
   },
 ];
 
@@ -26,18 +29,35 @@ export default function HowItWorks() {
     <section className="section" id="how-it-works">
       <div className="container">
         <div className="text-center">
-          <span className="section-label" style={{ color: "#3B82F6" }}>How it works</span>
+          <span 
+            className="section-label" 
+            style={{ 
+              color: "#3B82F6", 
+              backgroundColor: "#EFF6FF", 
+              padding: "6px 16px", 
+              borderRadius: "999px", 
+              fontSize: "12px", 
+              fontWeight: 700, 
+              letterSpacing: "0.05em", 
+              textTransform: "uppercase",
+              display: "inline-block",
+              marginBottom: "16px"
+            }}
+          >
+            How CareBridge Works
+          </span>
           <h2 className="section-title">Healthcare help in 3 steps</h2>
           <p className="section-subtitle">
-            From search to appointment — we&apos;ve made finding quality healthcare as easy as possible, at zero cost to you.
+            From search to care in under 2 minutes designed for every<br />Nigerian, in every situation.
           </p>
         </div>
 
         <div className={styles.steps}>
           {steps.map((step, i) => (
             <div key={step.title} className={styles.stepCard} id={`step-${i + 1}`}>
-              <div className={styles.imagePlaceholder} style={{ background: step.imageBg }}>
-                <span className={styles.imageIcon}>{step.icon}</span>
+              <img src={step.badge} alt={`Step ${i + 1} Badge`} className={styles.badgeImg} />
+              <div className={styles.imageWrapper}>
+                <img src={step.image} alt={step.title} className={styles.stepImage} />
               </div>
               <h3 className={styles.stepTitle}>{step.title}</h3>
               <p className={styles.stepDesc}>{step.description}</p>
