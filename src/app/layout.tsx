@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import BottomNav from "@/components/layout/BottomNav";
 
 export const metadata: Metadata = {
   title: "SpatialCare — Find Healthcare, Fast",
@@ -14,10 +17,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import BottomNav from "@/components/layout/BottomNav";
 
 export default function RootLayout({
   children,
