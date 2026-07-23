@@ -133,7 +133,7 @@ export default function Hero() {
               />
             ))}
           </div>
-          <span className={styles.trustedText}>To serve over 200 million Nigrians</span>
+          <span className={styles.trustedText}>To serve over 200 million Nigerians</span>
         </div>
       </div>
     </section>
