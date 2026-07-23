@@ -28,7 +28,7 @@ export default function Categories() {
 
         <div className={styles.grid}>
           {categories.map((cat, i) => (
-            <Link key={cat.name} href="/coverage" className={styles.card} style={{ background: cat.color }} id={`category-${i}`}>
+            <Link key={cat.name} href="/facilities" className={styles.card} style={{ background: cat.color }} id={`category-${i}`}>
               <div className={styles.info}>
                 <div className={styles.name}>{cat.name}</div>
                 <div className={styles.count}>{cat.count}</div>
@@ -41,7 +41,7 @@ export default function Categories() {
         </div>
 
         <div className="text-center" style={{ marginTop: "40px" }}>
-          <Link href="/coverage" className="btn btn-outline-primary">View Full Coverage Details</Link>
+          <Link href="/facilities" className="btn btn-outline-primary">View Full Coverage Details</Link>
         </div>
       </div>
     </section>

@@ -10,12 +10,12 @@
 }
 .label {
   display: inline-block;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   color: #3B82F6;
   background-color: #EFF6FF;
   padding: 6px 16px;
-  border-radius: 8px;
+  border-radius: 999px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 12px;

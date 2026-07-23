@@ -1,0 +1,224 @@
+.aboutHero {
+  padding: 120px 20px 80px;
+  background: linear-gradient(180deg, #F9FAFB 0%, #FFFFFF 100%);
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  max-width: 800px;
+  margin: 0 auto 24px;
+}
+
+.heroHighlight {
+  color: #A855F7;
+}
+
+.heroSubtitle {
+  font-size: 20px;
+  color: #4B5563;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Zig Zag Section */
+.zigZagSection {
+  padding: 80px 20px;
+  background: #FFFFFF;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  max-width: 1200px;
+  margin: 0 auto 120px;
+  align-items: center;
+}
+
+.row:last-child {
+  margin-bottom: 0;
+}
+
+.rowReverse {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  max-width: 1200px;
+  margin: 0 auto 120px;
+  align-items: center;
+  direction: rtl;
+}
+
+.rowReverse > * {
+  direction: ltr;
+}
+
+/* Image Expressive Styling */
+.imageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.mainImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s ease;
+}
+
+.imageContainer:hover .mainImage {
+  transform: translateY(-8px);
+}
+
+.floatingBadge {
+  position: absolute;
+  width: 120px;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  transition: transform 0.4s ease;
+}
+
+.badgeTopLeft {
+  top: -24px;
+  left: -24px;
+}
+
+.badgeBottomRight {
+  bottom: -24px;
+  right: -24px;
+}
+
+.badgeTopRight {
+  top: -24px;
+  right: -24px;
+}
+
+.imageContainer:hover .floatingBadge {
+  transform: scale(1.05);
+}
+
+/* Text Content */
+.textContent {
+  max-width: 480px;
+}
+
+.eyebrow {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #3B82F6;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+.description {
+  font-size: 18px;
+  color: #4B5563;
+  line-height: 1.6;
+}
+
+/* Vision */
+.vision {
+  background: #F9FAFB;
+  padding: 120px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.visionBgImages {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.15;
+  z-index: 0;
+}
+
+.bgImage {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.bgImage:nth-child(1) { top: 10%; left: 10%; transform: rotate(-15deg); width: 120px; height: 120px; }
+.bgImage:nth-child(2) { top: 20%; right: 15%; transform: rotate(10deg); width: 100px; height: 100px; }
+.bgImage:nth-child(3) { bottom: 15%; left: 20%; transform: rotate(5deg); width: 90px; height: 90px; }
+.bgImage:nth-child(4) { bottom: 10%; right: 10%; transform: rotate(-20deg); width: 130px; height: 130px; }
+.bgImage:nth-child(5) { top: 50%; left: 5%; transform: rotate(25deg); width: 80px; height: 80px; }
+.bgImage:nth-child(6) { top: 60%; right: 5%; transform: rotate(-10deg); width: 110px; height: 110px; }
+.bgImage:nth-child(7) { top: 5%; left: 45%; transform: rotate(15deg); width: 95px; height: 95px; }
+.bgImage:nth-child(8) { bottom: -5%; left: 50%; transform: rotate(-5deg); width: 150px; height: 150px; }
+
+.visionContent {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.visionTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+.visionText {
+  font-size: 20px;
+  color: #4B5563;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+@media (max-width: 1024px) {
+  .row, .rowReverse {
+    grid-template-columns: 1fr;
+    gap: 64px;
+    direction: ltr;
+  }
+  
+  .textContent {
+    max-width: 100%;
+    text-align: center;
+  }
+  
+  .imageContainer {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .floatingBadge {
+    width: 80px;
+    top: -16px;
+    left: -16px;
+    bottom: -16px;
+    right: -16px;
+  }
+}

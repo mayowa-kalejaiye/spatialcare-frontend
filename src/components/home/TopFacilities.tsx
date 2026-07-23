@@ -57,6 +57,23 @@ export default function TopFacilities() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const CACHE_KEY = "top_facilities_cache";
+    const CACHE_TIME = 5 * 60 * 1000; // 5 minutes
+
+    try {
+      const cached = sessionStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const { timestamp, data } = JSON.parse(cached);
+        if (Date.now() - timestamp < CACHE_TIME) {
+          setFacilities(data);
+          setLoading(false);
+          return;
+        }
+      }
+    } catch (e) {
+      console.warn("Cache read error", e);
+    }
+
     fetch("/api/facilities/?state=fct&limit=3&offset=0")
       .then(res => res.json())
       .then(data => {
@@ -67,6 +84,15 @@ export default function TopFacilities() {
             displayImage: shuffledImages[i % shuffledImages.length]
           }));
           setFacilities(withImages);
+          
+          try {
+            sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+              timestamp: Date.now(),
+              data: withImages
+            }));
+          } catch (e) {
+            console.warn("Cache write error", e);
+          }
         }
         setLoading(false);
       })

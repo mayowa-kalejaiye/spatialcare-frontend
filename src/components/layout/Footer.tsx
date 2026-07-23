@@ -52,7 +52,7 @@ export default function Footer() {
       <div className={styles.bottomBar}>
         <div className={`container ${styles.bottomInner}`}>
           <p className={styles.copyright}>
-            &copy; 2024 SpatialCare, a product of Spatial Care Inc.
+            &copy; 2026 SpatialCare, a product of Spatial Care Inc.
           </p>
           <div className={styles.socials}>
             <a href="#" className={styles.social}>X</a>
