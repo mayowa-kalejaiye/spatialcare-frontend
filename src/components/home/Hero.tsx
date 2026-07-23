@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./Hero.module.css";
+import { motion } from "framer-motion";
 
 export default function Hero() {
   const router = useRouter();
@@ -127,34 +128,67 @@ export default function Hero() {
     <section className={styles.hero} id="hero">
       <div className={`container ${styles.inner}`}>
         {/* Shield Icon (Middle Left) */}
-        <div className={styles.floatLeftMiddle} aria-hidden="true">
-          <img src="/images/hero/hero-icon2.svg" alt="Protection Shield" className={styles.heroIconImg} style={{ animationDelay: '0s' }} />
-        </div>
+        <motion.div 
+          className={styles.floatLeftMiddle} 
+          aria-hidden="true"
+          initial={{ opacity: 0, x: -50, y: 50 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+        >
+          <img src="/images/hero/hero-icon2.svg" alt="Protection Shield" className={styles.heroIconImg} />
+        </motion.div>
 
         {/* Stethoscope Icon (Bottom Left) */}
-        <div className={styles.floatLeftBottom} aria-hidden="true">
-          <img src="/images/hero/hero-icon3.svg" alt="Stethoscope" className={styles.heroIconImg} style={{ animationDelay: '1.5s', width: '120px' }} />
-        </div>
+        <motion.div 
+          className={styles.floatLeftBottom} 
+          aria-hidden="true"
+          initial={{ opacity: 0, x: -30, y: 30 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+        >
+          <img src="/images/hero/hero-icon3.svg" alt="Stethoscope" className={styles.heroIconImg} style={{ width: '120px' }} />
+        </motion.div>
 
         {/* Pink Cross Icon (Top Right) */}
-        <div className={styles.floatRightTop} aria-hidden="true">
-          <img src="/images/hero/hero-icon1.svg" alt="Medical Heart Cross" className={styles.heroIconImg} style={{ animationDelay: '0.7s', width: '110px' }} />
-        </div>
+        <motion.div 
+          className={styles.floatRightTop} 
+          aria-hidden="true"
+          initial={{ opacity: 0, x: 50, y: -50 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+        >
+          <img src="/images/hero/hero-icon1.svg" alt="Medical Heart Cross" className={styles.heroIconImg} style={{ width: '110px' }} />
+        </motion.div>
 
         {/* Headline */}
-        <h1 className={styles.headline}>
+        <motion.h1 
+          className={styles.headline}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           Find Healthcare,{" "}
           <span className={styles.headlineHighlight}>Fast.</span>
           <span className={styles.crossIcon} aria-hidden="true">✚</span>
-        </h1>
+        </motion.h1>
 
         {/* Subtext */}
-        <p className={styles.subtext}>
+        <motion.p 
+          className={styles.subtext}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        >
           Locate accredited hospitals, discover free government services, verify treatment availability, <br className="hidden md:block" />and get emergency routing, instantly, from anywhere in Nigeria.
-        </p>
+        </motion.p>
 
         {/* Search Bar */}
-        <div className={styles.searchBar}>
+        <motion.div 
+          className={styles.searchBar}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+        >
           <div className={styles.dropdownGroup}>
             <select className={styles.searchDropdown} value={selectedState} onChange={e => setSelectedState(e.target.value)}>
               <option value="" disabled>Select State</option>
@@ -193,10 +227,15 @@ export default function Hero() {
             </button>
             <button className="btn btn-primary" style={{ padding: "12px 32px", flex: 1 }} onClick={handleSearch}>Search</button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Avatars */}
-        <div className={styles.trusted}>
+        <motion.div 
+          className={styles.trusted}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
+        >
           <div className={styles.avatars}>
             {[
               { src: "/images/avatars/avatar1.png", color: "#FF8EAA" },
@@ -219,7 +258,7 @@ export default function Hero() {
             ))}
           </div>
           <span className={styles.trustedText}>To serve over 200 million Nigerians</span>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

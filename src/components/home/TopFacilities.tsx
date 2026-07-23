@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./TopFacilities.module.css";
 import cardStyles from "../facilities/Hospitals.module.css";
+import { motion } from "framer-motion";
 
 interface Facility {
   id: number;
@@ -105,7 +106,13 @@ export default function TopFacilities() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={styles.header}>
+        <motion.div 
+          className={styles.header}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <div>
             <div className={styles.label}>TOP RATED FACILITIES</div>
             <h2 className={styles.title}>Verified hospitals near you</h2>
@@ -113,14 +120,22 @@ export default function TopFacilities() {
           <Link href="/facilities" className={styles.viewAll}>
             View all <span>→</span>
           </Link>
-        </div>
+        </motion.div>
 
         {loading ? (
           <div style={{ textAlign: "center", padding: "40px" }}>Loading top facilities...</div>
         ) : (
           <div className={cardStyles.grid}>
             {facilities.map((h, i) => (
-              <article key={h.id} className={cardStyles.card} id={`top-hospital-${i}`}>
+              <motion.article 
+                key={h.id} 
+                className={cardStyles.card} 
+                id={`top-hospital-${i}`}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
+              >
                 <div 
                   className={cardStyles.cardImage} 
                   style={{ 
@@ -200,7 +215,7 @@ export default function TopFacilities() {
                     )}
                   </div>
                 </div>
-              </article>
+              </motion.article>
             ))}
           </div>
         )}

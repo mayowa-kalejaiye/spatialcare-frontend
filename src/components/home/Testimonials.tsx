@@ -1,4 +1,6 @@
+"use client";
 import styles from "./Testimonials.module.css";
+import { motion } from "framer-motion";
 
 const testimonials = [
   {
@@ -31,14 +33,29 @@ export default function Testimonials() {
   return (
     <section className="section" id="testimonials">
       <div className="container">
-        <div className="text-center">
+        <motion.div 
+          className="text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <span className="section-label" style={{ color: "#3B82F6" }}>Testimonials</span>
           <h2 className="section-title">Lives impacted every day</h2>
-        </div>
+        </motion.div>
 
         <div className={styles.grid}>
           {testimonials.map((t, i) => (
-            <div key={t.name} className={styles.card} style={{ background: t.color }} id={`testimonial-${i}`}>
+            <motion.div 
+              key={t.name} 
+              className={styles.card} 
+              style={{ background: t.color }} 
+              id={`testimonial-${i}`}
+              initial={{ opacity: 0, y: 50, rotate: -2 }}
+              whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5, delay: i * 0.2, type: "spring", bounce: 0.4 }}
+            >
               <div className={styles.quoteIcon} style={{ color: t.avatarBg }}>&ldquo;</div>
               <p className={styles.quoteText}>{t.quote}</p>
               
@@ -51,7 +68,7 @@ export default function Testimonials() {
                   <div className={styles.time}>{t.time}</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

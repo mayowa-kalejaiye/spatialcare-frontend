@@ -1,5 +1,7 @@
+"use client";
 import styles from "./Categories.module.css";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const categories = [
   { name: "Emergency Care", count: "2,841 facilities", color: "#FFFFFF", image: "/images/categories/emergency.svg" },
@@ -18,25 +20,40 @@ export default function Categories() {
   return (
     <section className="section" id="categories" style={{ background: "var(--gray-50)" }}>
       <div className="container">
-        <div className="text-center">
+        <motion.div 
+          className="text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <span className="section-label" style={{ color: "var(--green)" }}>BHCPF COVERAGE</span>
           <h2 className="section-title">100% Free Health Coverage</h2>
           <p className="section-subtitle">
             Explore the key healthcare services and treatments fully covered by the Basic Health Care Provision Fund.
           </p>
-        </div>
+        </motion.div>
 
         <div className={styles.grid}>
           {categories.map((cat, i) => (
-            <Link key={cat.name} href="/facilities" className={styles.card} style={{ background: cat.color }} id={`category-${i}`}>
-              <div className={styles.info}>
-                <div className={styles.name}>{cat.name}</div>
-                <div className={styles.count}>{cat.count}</div>
-              </div>
-              <div className={styles.imageWrapper}>
-                <img src={cat.image} alt={cat.name} className={styles.categoryImage} />
-              </div>
-            </Link>
+            <motion.div
+              key={cat.name}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.4, delay: i * 0.05, ease: "easeOut" }}
+              style={{ display: "flex" }}
+            >
+              <Link href="/facilities" className={styles.card} style={{ background: cat.color, flex: 1, width: "100%" }} id={`category-${i}`}>
+                <div className={styles.info}>
+                  <div className={styles.name}>{cat.name}</div>
+                  <div className={styles.count}>{cat.count}</div>
+                </div>
+                <div className={styles.imageWrapper}>
+                  <img src={cat.image} alt={cat.name} className={styles.categoryImage} />
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
 

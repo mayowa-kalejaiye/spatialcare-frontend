@@ -1,4 +1,6 @@
+"use client";
 import styles from "./HowItWorks.module.css";
+import { motion } from "framer-motion";
 
 const steps = [
   {
@@ -28,7 +30,13 @@ export default function HowItWorks() {
   return (
     <section className="section" id="how-it-works">
       <div className="container">
-        <div className="text-center">
+        <motion.div 
+          className="text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <span 
             className="section-label" 
             style={{ 
@@ -50,18 +58,26 @@ export default function HowItWorks() {
           <p className="section-subtitle">
             From search to care in under 2 minutes designed for every<br />Nigerian, in every situation.
           </p>
-        </div>
+        </motion.div>
 
         <div className={styles.steps}>
           {steps.map((step, i) => (
-            <div key={step.title} className={styles.stepCard} id={`step-${i + 1}`}>
+            <motion.div 
+              key={step.title} 
+              className={styles.stepCard} 
+              id={`step-${i + 1}`}
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6, delay: i * 0.2, ease: "easeOut" }}
+            >
               <img src={step.badge} alt={`Step ${i + 1} Badge`} className={styles.badgeImg} />
               <div className={styles.imageWrapper}>
                 <img src={step.image} alt={step.title} className={styles.stepImage} />
               </div>
               <h3 className={styles.stepTitle}>{step.title}</h3>
               <p className={styles.stepDesc}>{step.description}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

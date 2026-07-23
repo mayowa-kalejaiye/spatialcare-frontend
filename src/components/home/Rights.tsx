@@ -1,5 +1,7 @@
+"use client";
 import Link from "next/link";
 import styles from "./Rights.module.css";
+import { motion } from "framer-motion";
 
 const counters = [
   { value: "8,464", label: "Verified PHC Facilities", bgColor: "#B28CF7" }, 
@@ -20,7 +22,13 @@ export default function Rights() {
     <section className="section" id="rights" style={{ background: "var(--gray-100)" }}>
       <div className={`container ${styles.inner}`}>
         {/* Left */}
-        <div className={styles.left}>
+        <motion.div 
+          className={styles.left}
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <div className={styles.badgeLabel}>
             <span className={styles.dot}></span>
             Know Your Rights
@@ -48,16 +56,25 @@ export default function Rights() {
               <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </Link>
-        </div>
+        </motion.div>
 
         {/* Right */}
         <div className={styles.right}>
           <div className={styles.countersGrid}>
             {counters.map((c, i) => (
-              <div key={c.label} className={styles.counterCard} id={`counter-${i}`} style={{ background: c.bgColor }}>
+              <motion.div 
+                key={c.label} 
+                className={styles.counterCard} 
+                id={`counter-${i}`} 
+                style={{ background: c.bgColor }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.5, delay: i * 0.15, ease: "easeOut" }}
+              >
                 <div className={styles.counterValue} style={{ color: "#FFFFFF" }}>{c.value}</div>
                 <div className={styles.counterLabel}>{c.label}</div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
