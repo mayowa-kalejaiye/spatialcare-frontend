@@ -12,6 +12,14 @@ export const metadata: Metadata = {
     description:
       "Discover top-rated doctors, hospitals, and health services near you.",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "SpatialCare Open Graph Image",
+      }
+    ],
   },
 };
 
