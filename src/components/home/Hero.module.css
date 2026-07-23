@@ -3,7 +3,8 @@
   background: var(--bg-color);
   padding: 160px 0 100px;
   text-align: center;
-  overflow: hidden;
+  overflow-x: clip;
+  z-index: 10;
 }
 
 .inner {
