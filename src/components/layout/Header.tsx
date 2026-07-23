@@ -69,7 +69,7 @@ export default function Header() {
         {/* CTA Buttons */}
         <div className={styles.cta}>
           <button onClick={() => setIsEmergencyOpen(true)} className={styles.emergencyBtn}>
-            Emergency
+            Report
           </button>
           
           <button className={styles.iconBtn} aria-label="Notifications">
