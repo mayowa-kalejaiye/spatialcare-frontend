@@ -157,4 +157,7 @@
   .chevron {
     display: none;
   }
+  .iconBtn {
+    display: none;
+  }
 }

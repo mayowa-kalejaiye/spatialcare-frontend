@@ -1,6 +1,8 @@
 .hero {
   position: relative;
-  background: var(--bg-color);
+  background: radial-gradient(circle at top right, rgba(243,232,255,0.8), transparent 40%),
+              radial-gradient(circle at bottom left, rgba(224,242,254,0.8), transparent 40%),
+              var(--bg-color);
   padding: 160px 0 100px;
   text-align: center;
   overflow-x: clip;
@@ -11,6 +13,7 @@
   position: relative;
   max-width: 900px;
   margin: 0 auto;
+  z-index: 2;
 }
 
 .headline {
@@ -131,6 +134,7 @@
 .floatRightTop {
   position: absolute;
   z-index: 1;
+  pointer-events: none;
 }
 
 .floatLeftMiddle {
@@ -197,6 +201,26 @@
   .floatLeftMiddle,
   .floatLeftBottom,
   .floatRightTop {
-    display: none;
+    display: block;
+    opacity: 0.3; /* Make them subtle on mobile */
+  }
+
+  .floatLeftMiddle {
+    top: 15%;
+    left: -20px;
+  }
+
+  .floatLeftBottom {
+    bottom: 5%;
+    left: -10px;
+  }
+
+  .floatRightTop {
+    top: 5%;
+    right: -20px;
+  }
+
+  .heroIconImg {
+    width: 90px !important;
   }
 }
