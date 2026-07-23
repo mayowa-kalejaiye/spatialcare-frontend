@@ -31,7 +31,7 @@ export default function Hero() {
           if (Array.isArray(data)) setLgasList(data);
         })
         .catch(err => console.error(err));
-      
+
       setSelectedLga("");
       setSelectedWard("");
       setWardsList([]);
@@ -46,7 +46,7 @@ export default function Hero() {
           if (Array.isArray(data)) setWardsList(data);
         })
         .catch(err => console.error(err));
-        
+
       setSelectedWard("");
     }
   }, [selectedState, selectedLga]);
@@ -56,7 +56,7 @@ export default function Hero() {
     if (selectedState) params.append("state", selectedState);
     if (selectedLga) params.append("lga", selectedLga);
     if (selectedWard) params.append("ward", selectedWard);
-    
+
     router.push(`/facilities?${params.toString()}`);
   };
   return (
@@ -120,20 +120,20 @@ export default function Hero() {
               { src: "/images/avatars/avatar4.png", color: "#E5F90B" },
               { src: "/images/avatars/avatar5.png", color: "#B49082" },
             ].map((av, idx) => (
-              <img 
-                key={idx} 
-                src={av.src} 
-                alt={`User ${idx + 1}`} 
-                className={styles.avatarImg} 
-                style={{ 
-                  backgroundColor: av.color, 
-                  boxShadow: `0 0 0 2px white, 0 0 0 4px ${av.color}`, 
-                  zIndex: idx + 1 
-                }} 
+              <img
+                key={idx}
+                src={av.src}
+                alt={`User ${idx + 1}`}
+                className={styles.avatarImg}
+                style={{
+                  backgroundColor: av.color,
+                  boxShadow: `0 0 0 2px white, 0 0 0 4px ${av.color}`,
+                  zIndex: idx + 1
+                }}
               />
             ))}
           </div>
-          <span className={styles.trustedText}>To served over2.5 billions african</span>
+          <span className={styles.trustedText}>To serve over2.5 billions african</span>
         </div>
       </div>
     </section>

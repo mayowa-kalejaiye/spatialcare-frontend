@@ -1,10 +1,10 @@
 import styles from "./Rights.module.css";
 
 const counters = [
-  { value: "6,742", label: "Malaria Treatment Centers", bgColor: "#B28CF7" }, 
-  { value: "5,120", label: "Vaccination Points", bgColor: "#FA86AA" }, 
-  { value: "1,893", label: "HIV Care Centers", bgColor: "#089063" }, 
-  { value: "4,210", label: "Maternal Care Facilities", bgColor: "#A7BD18" }, 
+  { value: "8,464", label: "Verified PHC Facilities", bgColor: "#B28CF7" }, 
+  { value: "37", label: "Covered States & FCT", bgColor: "#FA86AA" }, 
+  { value: "774", label: "Accessible LGAs", bgColor: "#089063" }, 
+  { value: "100%", label: "Completely Free", bgColor: "#A7BD18" }, 
 ];
 
 const features = [
