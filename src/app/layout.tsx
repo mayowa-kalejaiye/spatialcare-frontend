@@ -4,13 +4,13 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "SpatialCare — Find Healthcare, Fast",
   description:
-    "SpatialCare helps you discover top-rated doctors, hospitals, and health services near you. Book appointments, access emergency routing, and exercise your healthcare rights — all for free.",
+    "SpatialCare helps Nigerians find verified BHCPF facilities, access completely free healthcare services, know their rights, and report illegal medical fees.",
   keywords: "healthcare, doctors, hospitals, appointments, emergency, health services",
   authors: [{ name: "SpatialCare" }],
   openGraph: {
     title: "SpatialCare — Find Healthcare, Fast",
     description:
-      "Discover top-rated doctors, hospitals, and health services near you.",
+      "Find verified BHCPF facilities, access free healthcare, know your rights, and report illegal fees in Nigeria.",
     type: "website",
     images: [
       {
