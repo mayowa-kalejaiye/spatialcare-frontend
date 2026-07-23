@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./Hero.module.css";
 
@@ -15,7 +15,7 @@ export default function Hero() {
   const [selectedWard, setSelectedWard] = useState("");
 
   const [isLocating, setIsLocating] = useState(false);
-  const [pendingLocation, setPendingLocation] = useState<{lga?: string, ward?: string} | null>(null);
+  const pendingLgaRef = useRef<string | null>(null);
 
   useEffect(() => {
     fetch("/api/locations/states")
@@ -33,18 +33,24 @@ export default function Hero() {
         .then(data => {
           if (Array.isArray(data)) {
             setLgasList(data);
-            if (pendingLocation?.lga) {
-              const matchedLga = data.find(l => pendingLocation.lga!.toLowerCase().includes(l.toLowerCase()) || l.toLowerCase().includes(pendingLocation.lga!.toLowerCase()));
+            if (pendingLgaRef.current) {
+              const pendingLga = pendingLgaRef.current;
+              let matchedLga = data.find(l => pendingLga.toLowerCase().includes(l.toLowerCase()) || l.toLowerCase().includes(pendingLga.toLowerCase()));
+              
+              if (!matchedLga && selectedState === "FCT" && data.includes("AMAC")) {
+                matchedLga = "AMAC"; // Robust fallback
+              }
+
               if (matchedLga) {
                 setSelectedLga(matchedLga);
               }
-              setPendingLocation(null);
+              pendingLgaRef.current = null;
             }
           }
         })
         .catch(err => console.error(err));
 
-      if (!pendingLocation) {
+      if (!pendingLgaRef.current) {
         setSelectedLga("");
         setSelectedWard("");
         setWardsList([]);
@@ -96,15 +102,15 @@ export default function Hero() {
             if (!matchedState && statesList.includes("FCT")) matchedState = "FCT"; // Ensure demo works
 
             if (matchedState) {
-              setPendingLocation({ lga: lgaName });
+              pendingLgaRef.current = lgaName;
               setSelectedState(matchedState);
             }
           }
         } catch (err) {
           console.error("Reverse geocoding failed", err);
           // Fallback demo
+          pendingLgaRef.current = "AMAC";
           if (statesList.includes("FCT")) setSelectedState("FCT");
-          setPendingLocation({ lga: "AMAC" });
         } finally {
           setIsLocating(false);
         }

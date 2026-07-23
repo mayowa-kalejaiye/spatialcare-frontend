@@ -3,6 +3,7 @@ import { useState, useRef, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import styles from "./Chat.module.css";
 import { Send, Bot, MapPin, Globe, Loader2, Search, X, Check } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 interface Message {
   id: string;
@@ -261,7 +262,28 @@ function ChatContent() {
                 <div className={styles.msgAvatar}><Bot size={18} /></div>
               )}
               <div className={`${styles.message} ${msg.role === 'user' ? styles.userMessage : styles.aiMessage}`}>
-                {msg.content}
+                {msg.role === 'ai' ? (
+                  <ReactMarkdown
+                    components={{
+                      a: ({ node, ...props }) => (
+                        <a {...props} target="_blank" rel="noopener noreferrer" style={{ color: '#3B82F6', textDecoration: 'underline' }} />
+                      ),
+                      p: ({ node, ...props }) => (
+                        <p {...props} style={{ marginBottom: '12px', marginTop: 0 }} />
+                      ),
+                      ul: ({ node, ...props }) => (
+                        <ul {...props} style={{ paddingLeft: '20px', marginBottom: '12px', marginTop: 0 }} />
+                      ),
+                      li: ({ node, ...props }) => (
+                        <li {...props} style={{ marginBottom: '4px' }} />
+                      ),
+                    }}
+                  >
+                    {msg.content}
+                  </ReactMarkdown>
+                ) : (
+                  msg.content
+                )}
               </div>
             </div>
           ))}
